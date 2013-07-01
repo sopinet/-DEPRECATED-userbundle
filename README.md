@@ -18,12 +18,14 @@ Configuration
 
 1. Add configuration / security file by default:
 
-  imports
-    - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" } 
+
+    imports
+      - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" } 
     
 2. Add your id and secret parameters:
 
-  parameters:
+
+    parameters:
       sopinet_user_facebook_id: "YOURID-FACEBOOK"
       sopinet_user_facebook_secret: "YOURSECRET-FACEBOOK"
       sopinet_user_google_id: "YOURID-GOOGLE"
@@ -31,16 +33,17 @@ Configuration
       
 3. It work with SonataUserBundle, overriding user class in app, so, you must have configure integration with FOSUB+SonataUser
 
-  fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Application\Sonata\UserBundle\Entity\User
+
+    fos_user:
+      db_driver: orm
+      firewall_name: main
+      user_class: Application\Sonata\UserBundle\Entity\User
     
 4. In your Application\Sonata\UserBundle\Entity\User you must have one field ProfilePicture:
 
-   /** @ORM\Column(name="profilepicture", type="string", length=500, nullable=true) */
-   protected $profilepicture;
-    
+
+    /** @ORM\Column(name="profilepicture", type="string", length=500, nullable=true) */
+    protected $profilepicture;
     /**
      * Set profilepicture
      *
@@ -50,10 +53,8 @@ Configuration
     public function setProfilePicture($profilepicture)
     {
       $this->profilepicture = $profilepicture;
-    
     	return $this;
     }
-    
     /**
      * Get profilepicture
      *
