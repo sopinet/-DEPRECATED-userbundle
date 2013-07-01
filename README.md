@@ -1,7 +1,10 @@
-userbundle
-==========
+Sopinet/UserBundle
+==================
 
-Integration of hwi_oauth + fosub (sonatauser & sonataadmin, optional)
+Easy Integration:
+hwi_oauth: https://github.com/hwi/HWIOAuthBundle
+fosub: https://github.com/FriendsOfSymfony/FOSUserBundle
+Optional (sonatauser & sonataadmin): https://github.com/sonata-project/SonataUserBundle
 
 What it is?
 ===========
