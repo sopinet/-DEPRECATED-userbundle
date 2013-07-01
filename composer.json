@@ -1,0 +1,23 @@
+{
+    "name": "sopinet/userbundle",
+    "version": "0.0.1",
+    "description": "Easy integration sample, fosuser+hwi_oauth+sonatauser for Symfony2",
+    "keywords": ["login","oauth","symfony2"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fernando Hidalgo",
+            "email": "fhidalgo@sopinet.com",
+            "homepage": "http://sopinet.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "friendsofsymfony/user-bundle" : "1.3.*"
+    },
+    "autoload": {
+        "psr-0": { "Sopinet\\UserBundle": "" }
+    },
+    "target-dir": "Sopinet/UserBundle"
+}

@@ -1,0 +1,16 @@
+parameters:
+#    sopinet_user.example.class: Sopinet\UserBundle\Example
+
+services:
+#    sopinet_user.example:
+#        class: %sopinet_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+parameters:
+    sopinet_user_provider.class: Sopinet\UserBundle\Security\Core\User\FOSUBUserProvider
+ 
+services:
+    sopinet_user_provider:
+        class: "%sopinet_user_provider.class%"
+        #this is the place where the properties are passed to the UserProvider - see config.yml
+        arguments: [@fos_user.user_manager,{facebook: facebookUid, google: gplusUid}]

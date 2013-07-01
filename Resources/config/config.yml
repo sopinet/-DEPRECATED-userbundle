@@ -1,0 +1,62 @@
+security:
+    firewalls:
+        # -> custom firewall for the admin area of the URL
+        admin:
+            pattern:      /admin(.*)
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+            logout:
+                path:           /admin/logout
+            anonymous:    true
+        # -> end custom configuration    
+        main:
+            pattern:    ^/
+            anonymous: true
+            logout: true
+            form_login:
+                provider: fos_userbundle
+                login_path: /login
+                use_forward: false
+                check_path: /login_check
+                csrf_provider: form.csrf_provider
+                failure_path: null
+            oauth:
+                resource_owners:
+                    facebook: "/login/check-facebook"
+                    google: "/login/check-google"
+                login_path: /login
+                failure_path: /login
+                oauth_user_provider:
+                    service: sopinet_user_provider
+
+hwi_oauth:
+    firewall_name: main    
+    resource_owners:
+      facebook:
+        type: facebook
+        client_id: "%sopinet_user_facebook_id%"
+        client_secret: "%sopinet_user_facebook_secret%"
+        infos_url: https://graph.facebook.com/me?fields=email,id,link,name,username,verified,picture.type(square),locale,gender
+        scope: "email"
+        paths:
+          email:           email
+          profilepicture:  picture.data.url  
+      google:
+        type: google
+        client_id: "%sopinet_user_google_id%"
+        client_secret: "%sopinet_user_google_secret%"
+        scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"      
+    fosub:
+      username_iterations: 30
+      properties:
+          # these properties will be used/redefined later in the custom FOSUBUserProvider service.
+          facebook: facebookUid
+          google: gplusUid
+    connect:
+      account_connector: sopinet_user_provider
+      # name of the firewall in which this bundle is active, this setting MUST be set
+      # here you will add one (or more) configurations for resource owners    
