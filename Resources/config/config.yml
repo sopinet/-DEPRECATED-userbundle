@@ -1,3 +1,12 @@
+parameters:
+    sopinet_user_provider.class: Sopinet\UserBundle\Security\Core\User\FOSUBUserProvider
+ 
+services:
+    sopinet_user_provider:
+        class: "%sopinet_user_provider.class%"
+        #this is the place where the properties are passed to the UserProvider - see config.yml
+        arguments: [@fos_user.user_manager,{facebook: facebookUid, google: gplusUid}]
+
 security:
     firewalls:
         # -> custom firewall for the admin area of the URL
