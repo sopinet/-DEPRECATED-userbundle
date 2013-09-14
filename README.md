@@ -26,6 +26,11 @@ From composer, add
     }
 }
 ```
+Add bundle to AppKernel (you can need add FOSUB and SonataUserBundle too)
+```php
+ new Sopinet\UserBundle\SopinetUserBundle(),
+```
+
 
 Configuration
 =============
@@ -87,4 +92,12 @@ And it must be defined in User.orm.xml
 
 ```yaml
     <field name="profilepicture" column="profilepicture" type="string" length="500" nullable="true"></field>
+```
+
+Usage
+=====
+
+```twig
+    <a href="{{ hwi_oauth_login_url('google') }}">Connect with Google</a>
+    <a href="{{ hwi_oauth_login_url('facebook') }}">Connect with Facebook</a>
 ```
