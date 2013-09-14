@@ -58,7 +58,7 @@ hwi_oauth:
         type: google
         client_id: "%sopinet_user_google_id%"
         client_secret: "%sopinet_user_google_secret%"
-        scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me https://www.google.com/m8/feeds"      
+        scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me https://www.google.com/m8/feeds https://www.googleapis.com/auth/plus.login"      
     fosub:
       username_iterations: 30
       properties:
