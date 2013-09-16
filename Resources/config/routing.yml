@@ -1,3 +1,3 @@
-sopinet_user_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: SopinetUserBundle:Default:index }
+socialutil:
+    resource: "@SopinetUserBundle/Controller/SocialUtilController.php"
+    type:     annotation
