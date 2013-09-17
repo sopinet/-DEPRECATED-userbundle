@@ -88,21 +88,27 @@ class SocialUtilController extends FOSRestController
 		$url .= $user->getEmail();
 		$url .= '/full?access_token=';
 		$url .= $user->getGplusname();
-		$url .= '&max-results=5000';
+		$url .= '&max-results=10';
 		 
 		$browser = new Browser();
 		$browser->setClient(new Curl());
 		$response = $browser->get($url);
 		$data = $response->getContent();
-		 
-		$dataXML = new \SimpleXMLElement($data);
+
+		$return = array();		
 		
-		$return = array();
+		if (substr($data,0,6) == '<html>') {
+			return null;
+		} else {
+			$dataXML = new \SimpleXMLElement($data);
+		}
+		
+
 		foreach($dataXML->entry as $entry) {
 			// get image
 			foreach($entry->link as $link) {
 				if ($link['type'] == "image/*") {
-					$object['image'] = $link['href']->__toString();
+					$object['picture'] = $link['href']->__toString();
 				}
 			}
 		
@@ -113,7 +119,7 @@ class SocialUtilController extends FOSRestController
 			$dataemail = $entry->children('gd', true);
 			$attr = $dataemail->attributes();
 			if ($attr['address'] != null) {
-				$object['email'] = $attr['address']->__toString();
+				$object['username'] = $attr['address']->__toString();
 				$return[] = $object;
 			}
 			$object = null;
@@ -121,17 +127,60 @@ class SocialUtilController extends FOSRestController
 
 		return $return;		
 	}
+	
+	private function getFriendsFacebook($user) {
+		ini_set("display_errors",1);
+		$url = 'https://graph.facebook.com/';
+		$url .= $user->getFacebookuid();
+		$url .= '/friends?fields=name,picture,username&access_token=';
+		$url .= $user->getFacebookname();
+			
+		$browser = new Browser();
+		$browser->setClient(new Curl());
+		$response = $browser->get($url);
+		$data = $response->getContent();
+		
+		$return = array();
+		
+		$dataJSON = json_decode($data);
+		foreach($dataJSON->data as $item) {
+			$object['id'] = $item->id;
+			$object['name'] = $item->name;
+			if (isset($item->username)) {
+				$object['username'] = $item->username;
+			}
+			$object['picture'] = $item->picture->data->url;
+			
+			$return[] = $object;
+		}
+
+		return $return;
+	}
     
     /**
      * @Route("/getfriends/{socialname}")
+     * @param String $socialname (facebook/gplus)
      */
     public function getFriendsAction($socialname) {    	
     	$user = $this->checkPrivateAccess();
     	if (!$user) return $this->msgDenied();
     	
+    	$userManager = $this->container->get('fos_user.user_manager');
+    	//$serializer = JMS\Serializer\SerializerBuilder::create()->build();
+    	
     	if ($socialname == "gplus") {
     		$data = $this->getFriendsGplus($user);
+    		if ($data != null) {
+    			$user->setGplusdata($data);
+    		}
+    	} else if ($socialname == "facebook") {
+    		$data = $this->getFriendsFacebook($user);
+    		if ($data != null) {
+    			$user->setFacebookdata($data);
+    		} 		
     	}
+    	
+    	$userManager->updateUser($user);    	
 
     	$view = View::create()
     	->setStatusCode(200)
@@ -139,5 +188,33 @@ class SocialUtilController extends FOSRestController
     	->setData($this->doOK($data));
     	
     	return $this->handleView($view);    	
-    }    
+    }
+    
+    /**
+     * @Route("/getcachefriends/{socialname}")
+     * @param String $socialname (facebook/gplus)
+     */
+    public function getCacheFriendsAction($socialname) {    	
+    	$user = $this->checkPrivateAccess();
+    	if (!$user) return $this->msgDenied();
+    	    	
+    	if ($socialname == 'gplus') {
+    		$data = $user->getGplusdata();
+    	} else {
+    		$data = $user->getFacebookdata();
+    	}
+    	
+    	if ($data == null) {
+    		$view = $this->getFriendsAction($socialname);
+    		return $view;
+    	}
+    	else {
+	    	$view = View::create()
+	    	->setStatusCode(200)
+	    	->setFormat('json')
+	    	->setData($this->doOK($data));
+	    	 
+	    	return $this->handleView($view);
+    	}    	
+    }
 }
