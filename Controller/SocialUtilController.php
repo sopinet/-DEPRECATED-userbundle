@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 
 /**
@@ -93,7 +94,6 @@ class SocialUtilController extends FOSRestController
 		$browser->setClient(new Curl());
 		$response = $browser->get($url);
 		$data = $response->getContent();
-		ld($data);
 		 
 		$dataXML = new \SimpleXMLElement($data);
 		
@@ -102,21 +102,23 @@ class SocialUtilController extends FOSRestController
 			// get image
 			foreach($entry->link as $link) {
 				if ($link['type'] == "image/*") {
-					$object['image'] = $link['href'];
+					$object['image'] = $link['href']->__toString();
 				}
 			}
 		
 			// get name
-			$object['name'] = $entry['title'];
+			$object['name'] = $entry->title->__toString();
 		
 			// get email
 			$dataemail = $entry->children('gd', true);
 			$attr = $dataemail->attributes();
-			$object['email'] = $attr['address'];
-		
-			$return[] = $object;
-		}
-		 
+			if ($attr['address'] != null) {
+				$object['email'] = $attr['address']->__toString();
+				$return[] = $object;
+			}
+			$object = null;
+		}		
+
 		return $return;		
 	}
     
@@ -128,7 +130,14 @@ class SocialUtilController extends FOSRestController
     	if (!$user) return $this->msgDenied();
     	
     	if ($socialname == "gplus") {
-			return $this->getFriendsGplus($user);
+    		$data = $this->getFriendsGplus($user);
     	}
+
+    	$view = View::create()
+    	->setStatusCode(200)
+    	->setFormat('json')
+    	->setData($this->doOK($data));
+    	
+    	return $this->handleView($view);    	
     }    
 }
