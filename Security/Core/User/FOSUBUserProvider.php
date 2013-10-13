@@ -3,13 +3,14 @@ namespace Sopinet\UserBundle\Security\Core\User;
  
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
+use Symfony\Component\Security\Core\User\UserInterface;
  
 class FOSUBUserProvider extends BaseClass
 {
 	/**
 	* {@inheritDoc}
 	*/
-	public function connect($user, UserResponseInterface $response)
+	public function connect(UserInterface $user, UserResponseInterface $response)
 	{
 		$property = $this->getProperty($response);
 		$username = $response->getUsername();
