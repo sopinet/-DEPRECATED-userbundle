@@ -67,7 +67,7 @@ hwi_oauth:
           # these properties will be used/redefined later in the custom FOSUBUserProvider service.
           facebook: facebookUid
           google: gplusUid
-    connect:
-      account_connector: sopinet_user_provider
+
+      #account_connector: sopinet_user_provider
       # name of the firewall in which this bundle is active, this setting MUST be set
       # here you will add one (or more) configurations for resource owners    
