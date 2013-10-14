@@ -38,6 +38,7 @@ security:
                     facebook: "/login/check-facebook"
                     google: "/login/check-google"
                 login_path: /login
+		default_target_path: /panel
                 failure_path: /login
                 oauth_user_provider:
                     service: sopinet_user_provider
