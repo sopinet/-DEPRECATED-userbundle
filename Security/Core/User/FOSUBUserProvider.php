@@ -43,6 +43,7 @@ class FOSUBUserProvider extends BaseClass
 	*/
 	public function loadUserByOAuthUserResponse(UserResponseInterface $response)
 	{	
+		$data = $response->getResponse();
 		$username = $response->getUsername();		
 		$user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
 		//when the user is registrating
@@ -58,6 +59,13 @@ class FOSUBUserProvider extends BaseClass
 			if (null === $userE) {
 				$user = $this->userManager->createUser();
 				$user->setUsername($username);
+				if($service == "gplus"){
+					$user->setFirstname($data['given_name']);
+				}
+				if($service == "facebook"){
+					$name = explode(" ",$data['name']);
+					$user->setFirstname($name[0]);
+				}
 				$user->setEmail($response->getEmail());
 				$user->setPassword($username);
 			} else {
