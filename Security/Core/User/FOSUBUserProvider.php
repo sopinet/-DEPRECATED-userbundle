@@ -58,7 +58,7 @@ class FOSUBUserProvider extends BaseClass
 			$userE = $this->userManager->findUserBy(array("email" => $response->getEmail()));
 			if (null === $userE) {
 				$user = $this->userManager->createUser();
-				$user->setUsername($username);
+				$user->setUsername($response->getEmail());
 				if($service == "gplus"){
 					$user->setFirstname($data['given_name']);
 				}
@@ -67,7 +67,7 @@ class FOSUBUserProvider extends BaseClass
 					$user->setFirstname($name[0]);
 				}
 				$user->setEmail($response->getEmail());
-				$user->setPassword($username);
+				$user->setPassword("");
 			} else {
 				$user = $userE;
 			}
