@@ -9,7 +9,7 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
  * @ORM\Table("fos_user")
  * @ORM\Entity
  */
-class SopinetUserExtend as BaseUser
+class SopinetUserExtend extends BaseUser
 {
     /**
      * @ORM\Id
