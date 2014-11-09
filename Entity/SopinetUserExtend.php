@@ -3,7 +3,7 @@
 namespace Sopinet\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\UserBundle\Entity\BaseUser as BaseUser
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Table("fos_user")
@@ -16,10 +16,11 @@ class SopinetUserExtend as BaseUser
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $id;   
     
     /** @ORM\Column(name="profilepicture", type="string", length=500, nullable=true) */
-    protected $profilepicture;   
+    protected $profilepicture;
+   
     
     /**
      * Set profilepicture
