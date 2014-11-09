@@ -3,52 +3,23 @@
 namespace Sopinet\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\UserBundle\Entity\BaseUser as BaseUser
 
 /**
- * @ORM\Table("sopinetuserextend")
+ * @ORM\Table("fos_user")
  * @ORM\Entity
  */
-class SopinetUserExtend
+class SopinetUserExtend as BaseUser
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;   
-    
-    /**
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="sopinetuserextend")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $user;
+    protected $id;
     
     /** @ORM\Column(name="profilepicture", type="string", length=500, nullable=true) */
-    protected $profilepicture;
-    
-    /**
-     * Set user
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
-     *
-     * @return UserExtend
-     */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
-    {
-    	$this->user = $user;
-    
-    	return $this;
-    }
-    
-    /**
-     * Get user
-     *
-     * @return \Application\Sonata\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-    	return $this->user;
-    }    
+    protected $profilepicture;   
     
     /**
      * Set profilepicture
