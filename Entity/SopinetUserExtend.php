@@ -3,7 +3,7 @@
 namespace Sopinet\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 /**
  * @ORM\Table("fos_user")
