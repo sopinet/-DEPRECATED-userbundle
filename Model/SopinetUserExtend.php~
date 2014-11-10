@@ -1,15 +1,15 @@
 <?php
 
-namespace Sopinet\UserBundle\Entity;
+namespace Sopinet\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\UserBundle\Entity\BaseUser as BaseUser;
+use FOS\UserBundle\Model\User as FOS;
 
 /**
- * @ORM\Table("fos_user")
+ * @ORM\Table("e_user")
  * @ORM\Entity
  */
-class SopinetUserExtend extends BaseUser
+class SopinetUserExtend extends FOS
 {
     /**
      * @ORM\Id
