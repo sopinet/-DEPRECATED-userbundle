@@ -9,11 +9,15 @@ fosub: https://github.com/FriendsOfSymfony/FOSUserBundle
 
 Optional (sonatauser & sonataadmin): https://github.com/sonata-project/SonataUserBundle
 
+(EXPERIMENTAL VERSION)
+
 
 What it is?
 ===========
 
 This bundle integrate fosub + hwi_oauth with default options and configuration for only work. You can use it as documentation, guide or use directly in your site.
+
+Too integrate another bundles from Sopinet (Experimental / Alpha)
 
 Installation
 ============
@@ -22,7 +26,7 @@ From composer, add
 ```yaml
 {
     "require": {
-        "sopinet/userbundle": "dev-master"
+        "sopinet/userbundle": "1.2.*dev"
     }
 }
 ```
@@ -35,69 +39,88 @@ Add bundle to AppKernel (you can need add FOSUB and SonataUserBundle too)
 Configuration
 =============
 
-1. Add configuration / security file by default:
-
-```yaml
-imports
-  - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" } 
-```
-
-2. Add your id and secret parameters:
-
-```yaml
-parameters:
-  sopinet_user_facebook_id: "YOURID-FACEBOOK"
-  sopinet_user_facebook_secret: "YOURSECRET-FACEBOOK"
-  sopinet_user_google_id: "YOURID-GOOGLE"
-  sopinet_user_google_secret: "YOURSECRET-GOOGLE"
-```
-
-3. It work with SonataUserBundle, overriding user class in app, so, you must have configure integration with FOSUB+SonataUser
-
-```yaml
-fos_user:
-  db_driver: orm
-  firewall_name: main
-  user_class: Application\Sonata\UserBundle\Entity\User
-```
-
-4. In your Application\Sonata\UserBundle\Entity\User you must have one field ProfilePicture:
-
+1. Create Application\Sopinet\UserBundle folder
+2. Create Entity and Admin folder
+3. Create User.php in Entity folder:
 ```php
-    /** @ORM\Column(name="profilepicture", type="string", length=500, nullable=true) */
-    protected $profilepicture;
+<?php
+ namespace Application\Sopinet\UserBundle\Entity;
+
+ use Doctrine\ORM\Mapping as ORM;
+ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+ use Sopinet\UserBundle\Model\BaseUser as BaseUser;
+ 
+ /**
+ * Entity User
+ *
+ * @ORM\Table("fos_user_user")
+ * @ORM\Entity
+ */
+ class User extends BaseUser
+ {
+   // EXTEND HERE
+ }
+?> 
+```
+4. Create Group.php in Entity folder:
+```
+<?php
+namespace Application\Sopinet\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Sopinet\UserBundle\Model\BaseGroup as BaseGroup;
+#use FOS\UserBundle\Entity\User as BaseUser;
+
+/**
+ * Entity User
+ *
+ * @ORM\Table("fos_user_group")
+ * @ORM\Entity
+ */
+class Group extends BaseGroup
+{
+  // EXTEND HERE
+}
+?>
+```
+5. Create UserAdmin in Admin folder:
+```php
+<?php
+ namespace Application\Sopinet\UserBundle\Admin;
+ use Sopinet\UserBundle\Admin\Model\BaseUserAdmin;
+ use Sonata\AdminBundle\Form\FormMapper;
+
+ class UserAdmin extends BaseUserAdmin
+ {
     /**
-     * Set profilepicture
-     *
-     * @param string $profilepicture
-     * @return User
+     * {@inheritdoc}
      */
-    public function setProfilePicture($profilepicture)
+    protected function configureFormFields(FormMapper $formMapper)
     {
-      $this->profilepicture = $profilepicture;
-    	return $this;
+        parent::configureFormFields($formMapper);
+
+        $formMapper
+            ->with('EXTEND...')
+            //->add('field...')
+            // ...
+            ->end()
+        ;
     }
-    /**
-     * Get profilepicture
-     *
-     * @return string
-     */
-    public function getProfilePicture()
-    {
-    	return $this->profilepicture;
-    }
+ }
+?>
+```
+6. Create GroupAdmin in Admin folder:
+```php
+<?php
+ namespace Application\Sopinet\UserBundle\Admin;
+ use Sopinet\UserBundle\Admin\Model\BaseGroupAdmin;
+
+ class GroupAdmin extends BaseGroupAdmin
+ {
+   // TODO EXTEND
+ }
+?>
 ```
 
-And it must be defined in User.orm.xml
-
-```yaml
-    <field name="profilepicture" column="profilepicture" type="string" length="500" nullable="true"></field>
-```
-
-Usage
-=====
-
-```twig
-    <a href="{{ hwi_oauth_login_url('google') }}">Connect with Google</a>
-    <a href="{{ hwi_oauth_login_url('facebook') }}">Connect with Facebook</a>
-```
+More documentation is coming
