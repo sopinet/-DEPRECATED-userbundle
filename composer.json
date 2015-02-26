@@ -22,6 +22,6 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
-    }
+    },
     "target-dir": "Sopinet/UserBundle"
 }
