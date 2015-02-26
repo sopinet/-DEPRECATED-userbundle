@@ -1,6 +1,5 @@
 {
     "name": "sopinet/userbundle",
-    "version": "0.0.1",
     "description": "Easy integration sample, fosuser+hwi_oauth+sonatauser for Symfony2",
     "keywords": ["login","oauth","symfony2"],
     "type": "symfony-bundle",
