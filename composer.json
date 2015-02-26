@@ -1,6 +1,5 @@
 {
     "name": "sopinet/userbundle",
-    "version": "vSusPasitos",
     "description": "Easy integration sample, fosuser+hwi_oauth+sonatauser for Symfony2",
     "keywords": ["login","oauth","symfony2"],
     "type": "symfony-bundle",
@@ -19,5 +18,10 @@
     "autoload": {
         "psr-0": { "Sopinet\\UserBundle": "" }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
     "target-dir": "Sopinet/UserBundle"
 }
