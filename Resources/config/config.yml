@@ -24,14 +24,11 @@ security:
         # -> end custom configuration    
         main:
             pattern:    ^/
-            anonymous: true
-            logout: true
             form_login:
                 provider: fos_userbundle
                 login_path: /login
                 use_forward: false
                 check_path: /login_check
-                success_handler: %sopinet_user_sucess%
                 csrf_provider: form.csrf_provider
                 failure_path: null
             oauth:
@@ -39,35 +36,23 @@ security:
                     facebook: "/login/check-facebook"
                     google: "/login/check-google"
                 login_path: /login
-                default_target_path: /panel
+                default_target_path: /
                 failure_path: /login
                 oauth_user_provider:
                     service: sopinet_user_provider
+            anonymous: ~
+            logout:
+                path: /logout
 
 hwi_oauth:
     firewall_name: main    
     resource_owners:
-      facebook:
-        type: facebook
-        client_id: "%sopinet_user_facebook_id%"
-        client_secret: "%sopinet_user_facebook_secret%"
-        infos_url: https://graph.facebook.com/me?fields=email,id,link,name,username,verified,picture.type(square),locale,gender
-        scope: "email"
-        paths:
-          email:           email
-          profilepicture:  picture.data.url  
-      google:
-        type: google
-        client_id: "%sopinet_user_google_id%"
-        client_secret: "%sopinet_user_google_secret%"
-        scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/plus.me https://www.google.com/m8/feeds https://www.googleapis.com/auth/plus.login"      
-    fosub:
-      username_iterations: 30
-      properties:
-          # these properties will be used/redefined later in the custom FOSUBUserProvider service.
-          facebook: facebookUid
-          google: gplusUid
-
-      #account_connector: sopinet_user_provider
-      # name of the firewall in which this bundle is active, this setting MUST be set
-      # here you will add one (or more) configurations for resource owners    
+        facebook:
+            type: facebook
+            client_id: "%sopinet_user_facebook_id%"
+            client_secret: "%sopinet_user_facebook_secret%"
+            scope: "email"
+        google:
+            type: google
+            client_id: "%sopinet_user_google_id%"
+            client_secret: "%sopinet_user_google_secret%"
