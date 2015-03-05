@@ -3,7 +3,8 @@ parameters:
  
 services:
     sopinet_user_provider:
-        class: "%sopinet_user_provider.class%"
+        class: "%sopine
+        t_user_provider.class%"
         #this is the place where the properties are passed to the UserProvider - see config.yml
         arguments: [@fos_user.user_manager,{facebook: facebookUid, google: gplusUid}]
 
@@ -41,6 +42,7 @@ security:
                 oauth_user_provider:
                     service: sopinet_user_provider
             anonymous: ~
+            switch_user: true
             logout:
                 path: /logout
 
