@@ -3,8 +3,7 @@ parameters:
  
 services:
     sopinet_user_provider:
-        class: "%sopine
-        t_user_provider.class%"
+        class: "%sopinet_user_provider.class%"
         #this is the place where the properties are passed to the UserProvider - see config.yml
         arguments: [@fos_user.user_manager,{facebook: facebookUid, google: gplusUid}]
 
