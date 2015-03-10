@@ -12,6 +12,8 @@ class FOSUBUserProvider extends BaseClass
 	*/
 	public function connect(UserInterface $user, UserResponseInterface $response)
 	{
+        // TODO: ESTO PARECE QUE NO SE LANZA NUNCA
+        /**
 		$property = $this->getProperty($response);
 		$username = $response->getUsername();
 	 
@@ -32,10 +34,16 @@ class FOSUBUserProvider extends BaseClass
 		$user->$setter_id($username);
 		$user->$setter_token($response->getAccessToken());
 		//save customfield		
-		$user->setProfilePicture($response->getProfilePicture());
+        //update custom fields
+        //TODO: Check google response, facebook?
+        if ($service == "facebook") {
+            $url = "http://graph.facebook.com/".$data['id']."/picture?type=normal";
+            $user->setProfilePicture($url);
+        }
 		//TODO: Save locale, $user->setLocale($response->getLocale());
-		 
+
 		$this->userManager->updateUser($user);
+         **/
 	}
 	 
 	/**
@@ -46,9 +54,9 @@ class FOSUBUserProvider extends BaseClass
 		$data = $response->getResponse();
 		$username = $response->getUsername();		
 		$user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
+        $service = $response->getResourceOwner()->getName();
 		//when the user is registrating
 		if (null === $user) {
-			$service = $response->getResourceOwner()->getName();
 			if ($service == "google") $service = "gplus";
 			$setter = 'set'.ucfirst($service);
 			$setter_id = $setter.'Uid';
@@ -65,6 +73,7 @@ class FOSUBUserProvider extends BaseClass
 				if($service == "facebook"){
 					$name = explode(" ",$data['name']);
 					$user->setFirstname($name[0]);
+                    $user->setLastname($name[1]);
 				}
 				$user->setEmail($response->getEmail());
 				$user->setPassword("");
@@ -93,8 +102,11 @@ class FOSUBUserProvider extends BaseClass
 		
 		//update custom fields
 		//TODO: Check google response, facebook?
-		$user->setProfilePicture($response->getProfilePicture());
-	 
+        if ($service == "facebook") {
+            $url = "http://graph.facebook.com/".$data['id']."/picture?type=normal";
+            $user->setProfilePicture($url);
+        }
+
 		return $user;
 	}
 }
