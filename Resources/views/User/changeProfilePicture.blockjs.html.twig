@@ -1,0 +1,12 @@
+{% set files = {'0': app.user.profilepicturefile } %}
+
+{% include 'SopinetUploadMagicBundle:Upload:simple_blockjs.html.twig'
+        with {
+        'name': 'userprofilepicture',
+        'type': 'gallery',
+        'files': files,
+        'limit': 1,
+        'entity': 'Sopinet_UserBundle_ProfilePictureFile',
+        'preview': true
+}
+%}

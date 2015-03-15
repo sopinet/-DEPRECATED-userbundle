@@ -13,7 +13,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
 
 /**
- * @Route("/socialutil")
+ * @Route("/sopinet_userbundle_socialutil")
  * @author sopinet
  *
  */

@@ -18,7 +18,7 @@ class BaseUser extends AbstractUser
     protected $profilepicture;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Sopinet\UserBundle\Entity\ProfilePictureFile", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="\Sopinet\UserBundle\Entity\ProfilePictureFile", inversedBy="user")
      */
     protected $profilepicturefile;
 
@@ -34,7 +34,6 @@ class BaseUser extends AbstractUser
         $this->profilepicture = $profilepicture;
         return $this;
     }
-
     /**
      * Get profilepicture
      *
@@ -42,21 +41,8 @@ class BaseUser extends AbstractUser
      */
     public function getProfilePicture()
     {
-        if ($this->getProfilePictureFile() != null) {
-            return $this->getProfilePictureFile()->getPathRelative();
-        } else {
-            return $this->getProfilePicture();
-        }
+        return $this->profilepicture;
     }
 
-    public function setProfilePictureFile(\Sopinet\UserBundle\Entity\ProfilePictureFile $profilepicturefile)
-    {
-	    $this->profilepicturefle = $profilepicturefile;
-	    return $this;
-    }
-
-    public function getProfilePictureFile()
-    {
-	    return $this->profilepicturefile;
-    }
+    public function setProfilePictureFile
 }

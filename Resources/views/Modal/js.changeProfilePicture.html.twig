@@ -1,0 +1,13 @@
+{% include 'SopinetUploadMagicBundle:Upload:simple_js.html.twig' %}
+{% include 'SopinetUserBundle:User:changeProfilePicture.blockjs.html.twig' %}
+
+<script>
+    $( document ).ready(function() {
+        $("body").on("uploadedFile", function(event, data) {
+            if (data != "ok" && data != "ko") {
+                d = new Date();
+                $("#sopinet_userbundle_profilepicture_img").attr("src", data+"?"+d.getTime());
+            }
+        });
+    });
+</script>

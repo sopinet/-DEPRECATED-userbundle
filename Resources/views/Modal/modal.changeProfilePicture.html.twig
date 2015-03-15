@@ -1,0 +1,25 @@
+{% if title is not defined %}
+    {% set title = "Cambiar la imagen de Usuario" %}
+{% endif %}
+
+{% if close is not defined %}
+    {% set close = "Cerrar" %}
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="sopinet_userbundle_modal_profilepicture" tabindex="-1" role="dialog" aria-labelledby="sopinet_userbundle_modal_profilepictureLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{ title }}</h4>
+        </div>
+        <div class="modal-content">
+            {% include 'SopinetUploadMagicBundle:Upload:simple_css.html.twig' %}
+            {% include 'SopinetUserBundle:User:changeProfilePicture.html.twig' %}
+        </div> <!-- /.modal-content -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ close }}</button>
+            <!--<button type="button" class="btn btn-primary">Guardar</button>-->
+        </div>
+    </div> <!-- /.modal-dialog -->
+</div> <!-- /.modal -->

@@ -1,0 +1,11 @@
+{% include 'SopinetUploadMagicBundle:Upload:simple.html.twig'
+with {
+    'name': 'userprofilepicture',
+    'type': 'gallery',
+    'id': 0,
+    'entity': 'Sopinet_UserBundle_ProfilePictureFile',
+    'param1': 'ApplicationSopinet_UserBundle_User',
+    'value1': app.user.id,
+    'icon': 'fa fa-plus-user'
+}
+%}

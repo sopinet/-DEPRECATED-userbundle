@@ -1,0 +1,5 @@
+{% if link_text is not defined %}
+    {% set link_text = "Cambiar imagen" %}
+{% endif %}
+
+<a data-toggle="modal" class="btn btn-info" href="#sopinet_userbundle_modal_profilepicture" data-target="#sopinet_userbundle_modal_profilepicture">{{ link_text }}</a>

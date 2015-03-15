@@ -1,3 +1,7 @@
-socialutil:
+sopinet_userbundle_socialutil:
     resource: "@SopinetUserBundle/Controller/SocialUtilController.php"
+    type:     annotation
+
+sopinet_userbundle_modal:
+    resource: "@SopinetUserBundle/Controller/ModalController.php"
     type:     annotation
