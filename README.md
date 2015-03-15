@@ -1,6 +1,9 @@
 Sopinet/UserBundle
 ==================
 
+NOT USE THIS VERSION, IS IN DEVELOPMENT
+
+
 Easy Integration:
 
 hwi_oauth: https://github.com/hwi/HWIOAuthBundle
