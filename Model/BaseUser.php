@@ -45,7 +45,7 @@ class BaseUser extends AbstractUser
         if ($this->getProfilePictureFile() != null) {
             return $this->getProfilePictureFile()->getPathRelative();
         } else {
-            return $this->getProfilePicture();
+            return $this->profilepicture;
         }
     }
 
