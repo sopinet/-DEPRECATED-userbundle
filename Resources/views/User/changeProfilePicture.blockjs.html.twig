@@ -1,4 +1,8 @@
-{% set files = {'0': app.user.profilepicturefile } %}
+{% if app.user.profilepicturefile is null %}
+    {% set files = {} %}
+{% else %}
+    {% set files = {'0': app.user.profilepicturefile } %}
+{% endif %}
 
 {% include 'SopinetUploadMagicBundle:Upload:simple_blockjs.html.twig'
         with {
