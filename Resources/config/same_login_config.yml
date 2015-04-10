@@ -1,0 +1,46 @@
+parameters:
+    sopinet_user_provider.class: Sopinet\UserBundle\Security\Core\User\FOSUBUserProvider
+ 
+services:
+    sopinet_user_provider:
+        class: "%sopinet_user_provider.class%"
+        #this is the place where the properties are passed to the UserProvider - see config.yml
+        arguments: [@fos_user.user_manager,{facebook: facebookUid, google: gplusUid}]
+
+security:
+    firewalls:
+        main:
+            pattern:    ^/
+            form_login:
+                provider: fos_userbundle
+                login_path: /login
+                use_forward: false
+                check_path: /login_check
+                csrf_provider: form.csrf_provider
+                failure_path: null
+            oauth:
+                resource_owners:
+                    facebook: "/login/check-facebook"
+                    google: "/login/check-google"
+                login_path: /login
+                default_target_path: /
+                failure_path: /login
+                oauth_user_provider:
+                    service: sopinet_user_provider
+            anonymous: ~
+            switch_user: true
+            logout:
+                path: /logout
+
+hwi_oauth:
+    firewall_name: main    
+    resource_owners:
+        facebook:
+            type: facebook
+            client_id: "%sopinet_user_facebook_id%"
+            client_secret: "%sopinet_user_facebook_secret%"
+            scope: "email"
+        google:
+            type: google
+            client_id: "%sopinet_user_google_id%"
+            client_secret: "%sopinet_user_google_secret%"
