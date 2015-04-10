@@ -39,7 +39,13 @@ Configuration
 
 ```yaml
 imports
-  - { resource: "../../vendor/sopinet/userbundle/Sopinet/UserBundle/Resources/config/config.yml" } 
+  - { resource: "@SopinetUserBundle/Resources/config/config.yml" }
+```
+instead of if you want the same login page for admin and users, then you must import this one: 
+
+```yaml
+imports
+  - { resource: "@SopinetUserBundle/Resources/config/same_login_config.yml" }
 ```
 
 2. Add your id and secret parameters:
