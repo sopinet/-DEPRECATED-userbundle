@@ -13,11 +13,11 @@ security:
             pattern:    ^/
             form_login:
                 provider: fos_userbundle
-                login_path: /login
+                login_path: fos_user_security_login
                 use_forward: false
                 check_path: /login_check
                 csrf_provider: form.csrf_provider
-                failure_path: null
+                failure_path: fos_user_security_login
             oauth:
                 resource_owners:
                     facebook: "/login/check-facebook"
