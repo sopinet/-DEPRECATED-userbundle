@@ -30,7 +30,7 @@ security:
             anonymous: ~
             switch_user: true
             logout:
-                path: /logout
+                path: fos_user_security_logout
 
 hwi_oauth:
     firewall_name: main    
