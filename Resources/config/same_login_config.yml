@@ -22,9 +22,9 @@ security:
                 resource_owners:
                     facebook: "/login/check-facebook"
                     google: "/login/check-google"
-                login_path: /login
+                login_path: fos_user_security_login
                 default_target_path: /
-                failure_path: /login
+                failure_path: fos_user_security_login
                 oauth_user_provider:
                     service: sopinet_user_provider
             anonymous: ~
